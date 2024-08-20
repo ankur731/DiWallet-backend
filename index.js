@@ -8,8 +8,10 @@ const authMiddleware = require("./middleware/auth");
 const mongoose = require('mongoose');
 
 // MongoDB connection URI
-const mongoURI = 'mongodb+srv://ankur73tiwari:KdWSeUuTC7z03dny@cluster0.rh2lnkv.mongodb.net/diwallet?retryWrites=true&w=majority';
+const dotenv = require('dotenv')
 
+// dot env config
+dotenv.config()
 
 app.use(express.json());
 app.use(cors({
@@ -17,7 +19,7 @@ app.use(cors({
 }))
 
 mongoose
-  .connect(mongoURI)
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Database connected successfully");
   })

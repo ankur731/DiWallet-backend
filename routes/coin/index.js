@@ -24,7 +24,7 @@ router.get("/top_gainers_losers", async function (req, res) {
       },
       {
         headers: {
-          "x-api-key": "add5c2ff-2364-4772-a9e3-429357fe72b0",
+          "x-api-key": process.env.COIN_API_KEY,
         },
       }
     );
@@ -54,7 +54,7 @@ router.get("/search-coin", async function (req, res) {
       },
       {
         headers: {
-          "x-api-key": "add5c2ff-2364-4772-a9e3-429357fe72b0",
+          "x-api-key": process.env.COIN_API_KEY,
         },
       }
     );
@@ -125,7 +125,7 @@ router.get("/get-wishlist/:id", async function (req, res) {
       {
         headers: {
           accept: "application/json",
-          "x-api-key": "add5c2ff-2364-4772-a9e3-429357fe72b0",
+          "x-api-key": process.env.COIN_API_KEY,
         },
       }
     );
