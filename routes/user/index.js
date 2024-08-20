@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const User = require("../../models/user");
 const axios = require("axios");
 const stripe = require("stripe")(
-  "sk_test_51PCHBhSJRtzJJuBTbRMnsaaJN5gDd6umhgXTtqZSP5upaP4MPRNwTRxDcqEYSPFSANc4MYqMQOFimyyxqQFMF6k300f6rBqdDB"
+  process.env.STRIPE_KEY
 );
 const router = express.Router();
 
