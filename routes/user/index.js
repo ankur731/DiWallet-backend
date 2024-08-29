@@ -4,9 +4,10 @@ const SECRET_KEY = "ankur@123";
 const bcrypt = require("bcryptjs");
 const User = require("../../models/user");
 const axios = require("axios");
-const stripe = require("stripe")(
-  process.env.STRIPE_KEY
-);
+require('dotenv').config();
+
+
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 const router = express.Router();
 
 router.get("/:id", async function (req, res) {
@@ -29,6 +30,7 @@ router.get("/:id", async function (req, res) {
 
 router.post("/payment", async (req, res) => {
   try {
+    console.log(process.env.STRIPE_KEY)
     let { amount, userId } = req.body;
     console.log(req.body);
     // Simple validation

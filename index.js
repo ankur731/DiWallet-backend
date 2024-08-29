@@ -39,6 +39,6 @@ app.use("/auth", authRouter)
 app.use("/coin", coinRouter)
 app.use("/user", userRouter)
 
-app.listen(8000, function (err) {
+app.listen(8000,'0.0.0.0', function (err) {
     console.log(err);
 })

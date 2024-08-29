@@ -10,6 +10,7 @@ const router = express.Router();
 
 router.get("/top_gainers_losers", async function (req, res) {
   try {
+    console.log("Hello")
     const { page, per_page } = req.query;
 
     const response = await axios.post(
@@ -314,6 +315,62 @@ router.put("/sell-coin", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+router.get("/history/:coinCode", async function (req, res) {
+  try {
+    const { coinCode } = req.params;
+    const { timeFrame } = req.query;
+
+    const today = new Date();
+    let startDate;
+
+    switch (timeFrame) {
+      case '1D':
+        startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+        break;
+      case '1W':
+        startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+        break;
+      case '1M':
+        startDate = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+        break;
+      case '1Y':
+        startDate = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+        break;
+      case '5Y':
+        startDate = new Date(today.getFullYear() - 5, today.getMonth(), today.getDate());
+        break;
+      default:
+        return res.status(400).json({ status: "false", msg: "Invalid timeFrame" });
+    }
+
+    const response = await axios.post(
+      `https://api.livecoinwatch.com/coins/single/history`,
+      {
+        currency: "INR",
+        code: coinCode,
+        meta: true,
+        start: startDate.getTime(),
+        end: today.getTime(),
+      },
+      {
+        headers: {
+          "x-api-key": "add5c2ff-2364-4772-a9e3-429357fe72b0",
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      res.status(200).json({ status: "true", data: response.data });
+    } else {
+      res.status(500).json({ status: "false", coins: [] });
+    }
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({ status: "false", msg: "Server error", error: error.message });
+  }
+});
+
 
 
 module.exports = router;
